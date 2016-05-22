@@ -1,5 +1,7 @@
 from flask import Flask
+import gunicorn
 import urllib2
+import json
 
 # key = "dc6zaTOxFJmzC"
 
@@ -7,6 +9,7 @@ import urllib2
 # http://api.giphy.com/v1/gifs/search?q=funny+cat&api_key=dc6zaTOxFJmzC
 app = Flask(__name__)
 key = "dc6zaTOxFJmzC"
+json_dict = {}
 
 
 @app.route('/asd')
@@ -16,7 +19,7 @@ def hello_world():
 
 @app.route('/')
 def search():
-    query = raw_input("Insert search query: ")
+    query = "cute tortoise"
     real_query = ""
     for i in query:
         if i == " ":
@@ -24,11 +27,18 @@ def search():
         else:
             real_query += i
 
-    response = urllib2.urlopen("http://api.giphy.com/v1/gifs/search?q=" + real_query + "&api_key=" + key)
-    result = response.read()
-    print result
+    json_object = urllib2.urlopen("http://api.giphy.com/v1/gifs/search?q=" + real_query + "&api_key=" + key)
+    data = json.load(json_object)
 
-    return "Search results for: " + query + result
+    #
+    # for item in data["data"]:
+    #     if not "url" in json_dict:
+    #         json_dict["url"] = [item["url"]]
+    #     else:
+    #         json_dict["url"].append(item["url"])
+
+
+   # return json_dict
 
 
 if __name__ == '__main__':
