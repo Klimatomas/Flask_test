@@ -1,2 +1,3 @@
-web: gunicorn Python_test1.py:app --log-file=-
+
+web: gunicorn Python_test1:app --log-file=-
 
