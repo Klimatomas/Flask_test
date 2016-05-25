@@ -1,2 +1,2 @@
-web: gunicorn Python_test1.wsgi --log-file=-
+web: gunicorn Python_test1.py --log-file=-
 
