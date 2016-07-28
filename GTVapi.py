@@ -3,6 +3,7 @@ import requests
 from json import dumps
 from flask import Flask
 
+
 app = Flask(__name__)
 giphy_key = "api_key=dc6zaTOxFJmzC"
 
