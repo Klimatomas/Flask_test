@@ -6,11 +6,13 @@ app = Flask(__name__)
 
 
 @app.route('/')
-def search():
-    return dumps(search.trending())
+def s():
+    gifs = s.trending()
+    sounds = s.spotify(gifs)
+    return dumps(s.result(sounds[0], sounds[1]))
 
 
 if __name__ == '__main__':
-    search = Requests()
+    s = Requests()
     app.debug = True
     app.run()

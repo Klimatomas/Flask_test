@@ -9,26 +9,27 @@ class Requests(object):
 
     def trending(self):
         trending_url = "http://api.giphy.com/v1/gifs/trending?"
-        gif_data = requests.get(trending_url + self.giphy_key).json()
-        return self.spotify(gif_data)
+        gifs = requests.get(trending_url + self.giphy_key).json()
+        print (gifs)
+        return gifs
 
-    def spotify(self, gif_data):
+    def spotify(self, gifs):
         req_set = []
         ary = []
-        for item in gif_data["data"]:
+        for item in gifs["data"]:
             query = self.slug_interpreter(str(item["slug"]), str(item["id"]))
             if query:
                 ary.append({"slug": item["slug"], "url": item["images"]["original"]["mp4"]})
                 req_set.append(grequests.get(self.spotify_url + query))
 
-        res_ary = grequests.map(req_set)
-        return self.result(res_ary, ary)
+        grequest_ary = grequests.map(req_set)
+        return grequest_ary, ary
 
     @staticmethod
-    def result(res_ary, ary):
+    def result(grequest_ary, ary):
         gif_array = []
         for i, item in enumerate(ary):
-            gif_music = res_ary[i].json()
+            gif_music = grequest_ary[i].json()
             if gif_music["tracks"]["total"] == 0:
                 continue
             else:
