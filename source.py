@@ -10,7 +10,6 @@ class Requests(object):
     def trending(self):
         trending_url = "http://api.giphy.com/v1/gifs/trending?"
         gifs = requests.get(trending_url + self.giphy_key).json()
-        print (gifs)
         return gifs
 
     def spotify(self, gifs):
